@@ -1,0 +1,44 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"slave1Code","type":"cell"},
+				{"name":"slave2Code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_versions",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"code","type":"cell"},{"name":"params","type":"cell"},{"name":"hashes","type":"uint256[]"}],"name":"_versions","type":"map(uint16,tuple)"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+		{
+			"name": "NewVersion",
+			"inputs": [
+				{"name":"vid","type":"uint16"},
+				{"name":"version","type":"uint16"},
+				{"name":"hash","type":"uint256"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"components":[{"name":"code","type":"cell"},{"name":"params","type":"cell"},{"name":"hashes","type":"uint256[]"}],"name":"_versions","type":"map(uint16,tuple)"}
+	]
+}

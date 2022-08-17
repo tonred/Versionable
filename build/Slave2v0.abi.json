@@ -1,0 +1,70 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["pubkey", "time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "acceptUpgrade",
+			"inputs": [
+				{"name":"version","type":"uint16"},
+				{"name":"code","type":"cell"},
+				{"name":"params","type":"cell"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "_vid",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_vid","type":"uint16"}
+			]
+		},
+		{
+			"name": "_version",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_version","type":"uint16"}
+			]
+		},
+		{
+			"name": "_data",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_data","type":"uint256"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+		{
+			"name": "CodeUpgraded",
+			"inputs": [
+				{"name":"oldVersion","type":"uint16"},
+				{"name":"newVersion","type":"uint16"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"_vid","type":"uint16"},
+		{"name":"_version","type":"uint16"},
+		{"name":"_data","type":"uint256"}
+	]
+}
