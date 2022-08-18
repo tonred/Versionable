@@ -38,6 +38,7 @@ abstract contract BaseSlave {
         TvmCell data = _encodeContractData();
         tvm.setcode(code);
         tvm.setCurrentCode(code);
+        tvm.resetStorage();
         onCodeUpgrade(data, oldVersion, params, remainingGasTo);
     }
 
