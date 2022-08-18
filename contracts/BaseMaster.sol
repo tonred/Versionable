@@ -17,7 +17,7 @@ abstract contract BaseMaster {
             uint16 sid = sids[i];
             TvmCell code = codes[i];
             Version version = Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR);
-            uint256 hash = _versionHash(code, empty);
+            uint256 hash = _versionHash(version, code, empty);
             mapping(Version => VersionData) versions = emptyMap;
             versions[version] = VersionData(hash, false);  // disallow upgrading to initial version
             _slaves[sid] = SlaveData(code, empty, version, /*versionsCount*/ 1, versions);
@@ -58,7 +58,7 @@ abstract contract BaseMaster {
         require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
         SlaveData data = _slaves[sid];
         Version version = _calcNewVersion(data.latest, minor);
-        uint256 hash = _versionHash(code, params);
+        uint256 hash = _versionHash(version, code, params);
         data.code = code;
         data.params = params;
         data.latest = version;
@@ -101,7 +101,7 @@ abstract contract BaseMaster {
         require(data.versions.exists(version), ErrorCodes.INVALID_VERSION);
         (uint256 expectedHash, bool active) = data.versions[version].unpack();
         require(active, ErrorCodes.VERSION_IS_DEACTIVATED);
-        uint256 hash = _versionHash(code, params);
+        uint256 hash = _versionHash(version, code, params);
         require(hash == expectedHash, ErrorCodes.INVALID_HASH);
         _sendUpgrade(destination, version, code, params, remainingGasTo);
     }
@@ -123,8 +123,8 @@ abstract contract BaseMaster {
     }
 
 
-    function _versionHash(TvmCell code, TvmCell params) private pure inline returns (uint256) {
-        TvmCell union = abi.encode(code, params);
+    function _versionHash(Version version, TvmCell code, TvmCell params) private pure inline returns (uint256) {
+        TvmCell union = abi.encode(version, code, params);
         return tvm.hash(union);
     }
 
