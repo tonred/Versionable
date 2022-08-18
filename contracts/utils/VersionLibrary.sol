@@ -1,0 +1,20 @@
+pragma ton-solidity >= 0.61.2;
+
+import "./Structs.sol";
+
+
+library VersionLibrary {
+
+    function compare(Version first, Version second) internal inline returns (int8) {
+        int64 firstID = (first.major << 16) | first.minor;
+        int64 secondID = (second.major << 16) | second.minor;
+        return math.sign(firstID - secondID);
+    }
+
+    function equals(Version first, Version second) internal inline returns (bool) {
+        int64 firstID = (first.major << 16) | first.minor;
+        int64 secondID = (second.major << 16) | second.minor;
+        return firstID == secondID;
+    }
+
+}

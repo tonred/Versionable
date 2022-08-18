@@ -4,12 +4,12 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../IVersionable.sol";
+import "../BaseMaster.sol";
 
 
-contract Master is IVersionable {
+contract Master is BaseMaster {
 
-    constructor(TvmCell slave1Code, TvmCell slave2Code) public IVersionable(
+    constructor(TvmCell slave1Code, TvmCell slave2Code) public BaseMaster(
         [uint16(1), uint16(2)], [slave1Code, slave2Code]
     ) {}
 

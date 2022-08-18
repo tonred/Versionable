@@ -8,11 +8,11 @@ import "../BaseSlave.sol";
 import "../utils/Constants.sol";
 
 
-contract Slave1v1 is BaseSlave {
+contract Slave2v1 is BaseSlave {
 
-    string public _data;
+    uint256 public _data;
 
-    constructor() public BaseSlave(1, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR)) {}
+    constructor() public BaseSlave(2, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR)) {}
 
     function _encodeContractData() internal override returns (TvmCell) {
         return abi.encode(_sid, _version, _data);

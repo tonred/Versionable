@@ -60,7 +60,7 @@
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"_data","type":"string"}
+				{"name":"_data","type":"uint256"}
 			]
 		}
 	],
@@ -83,6 +83,6 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"_sid","type":"uint16"},
 		{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"_version","type":"tuple"},
-		{"name":"_data","type":"string"}
+		{"name":"_data","type":"uint256"}
 	]
 }

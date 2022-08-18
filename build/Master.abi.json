@@ -13,11 +13,46 @@
 			]
 		},
 		{
-			"name": "_versions",
+			"name": "getSIDs",
 			"inputs": [
+				{"name":"answerId","type":"uint32"}
 			],
 			"outputs": [
-				{"components":[{"name":"code","type":"cell"},{"name":"params","type":"cell"},{"name":"hashes","type":"uint256[]"}],"name":"_versions","type":"map(uint16,tuple)"}
+				{"name":"sids","type":"uint16[]"}
+			]
+		},
+		{
+			"name": "getSlaveData",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"sid","type":"uint16"}
+			],
+			"outputs": [
+				{"name":"code","type":"cell"},
+				{"name":"params","type":"cell"},
+				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"latest","type":"tuple"},
+				{"name":"versionsCount","type":"uint32"}
+			]
+		},
+		{
+			"name": "getSlaveVersions",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"sid","type":"uint16"}
+			],
+			"outputs": [
+				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"versions","type":"tuple[]"}
+			]
+		},
+		{
+			"name": "getSlaveVersion",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"sid","type":"uint16"},
+				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"}
+			],
+			"outputs": [
+				{"components":[{"name":"hash","type":"uint256"},{"name":"active","type":"bool"}],"name":"data","type":"tuple"}
 			]
 		}
 	],
@@ -27,9 +62,19 @@
 		{
 			"name": "NewVersion",
 			"inputs": [
-				{"name":"vid","type":"uint16"},
-				{"name":"version","type":"uint16"},
-				{"name":"hash","type":"uint256"}
+				{"name":"sid","type":"uint16"},
+				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"},
+				{"name":"hash","type":"uint256"},
+				{"name":"initial","type":"bool"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "SetActivation",
+			"inputs": [
+				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"},
+				{"name":"active","type":"bool"}
 			],
 			"outputs": [
 			]
@@ -39,6 +84,6 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"components":[{"name":"code","type":"cell"},{"name":"params","type":"cell"},{"name":"hashes","type":"uint256[]"}],"name":"_versions","type":"map(uint16,tuple)"}
+		{"name":"_slaves","type":"optional(cell)"}
 	]
 }
