@@ -6,8 +6,59 @@
 		{
 			"name": "constructor",
 			"inputs": [
+				{"name":"owner","type":"address"},
 				{"name":"slave1Code","type":"cell"},
 				{"name":"slave2Code","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "expectedSlave1Address",
+			"inputs": [
+				{"name":"answerId","type":"uint32"},
+				{"name":"owner","type":"address"}
+			],
+			"outputs": [
+				{"name":"slave1","type":"address"}
+			]
+		},
+		{
+			"name": "deploySlave1",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "createNewVersionSlave1",
+			"inputs": [
+				{"name":"minor","type":"bool"},
+				{"name":"code","type":"cell"},
+				{"name":"params","type":"cell"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "upgradeSlave1",
+			"inputs": [
+				{"name":"destination","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "transferOwnership",
+			"inputs": [
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "renounceOwnership",
+			"inputs": [
 			],
 			"outputs": [
 			]
@@ -54,11 +105,37 @@
 			"outputs": [
 				{"components":[{"name":"hash","type":"uint256"},{"name":"active","type":"bool"}],"name":"data","type":"tuple"}
 			]
+		},
+		{
+			"name": "owner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"owner","type":"address"}
+			]
+		},
+		{
+			"name": "_randomNonce",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_randomNonce","type":"uint256"}
+			]
 		}
 	],
 	"data": [
+		{"key":1,"name":"_randomNonce","type":"uint256"}
 	],
 	"events": [
+		{
+			"name": "OwnershipTransferred",
+			"inputs": [
+				{"name":"previousOwner","type":"address"},
+				{"name":"newOwner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
 		{
 			"name": "NewVersion",
 			"inputs": [
@@ -84,6 +161,8 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"_slaves","type":"optional(cell)"}
+		{"name":"_slaves","type":"optional(cell)"},
+		{"name":"owner","type":"address"},
+		{"name":"_randomNonce","type":"uint256"}
 	]
 }

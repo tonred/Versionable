@@ -1,5 +1,6 @@
 pragma ton-solidity >= 0.61.2;
 
+import "./utils/Constants.sol";
 import "./utils/ErrorCodes.sol";
 import "./utils/VersionLibrary.sol";
 
@@ -28,7 +29,7 @@ abstract contract BaseSlave {
     }
 
     function acceptUpgrade(Version version, TvmCell code, TvmCell params, address remainingGasTo) public virtual {
-        if (version.compare(_version) == 1) {
+        if (version.compare(_version) != 1) {
             remainingGasTo.transfer({value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false});
             return;
         }
@@ -39,11 +40,16 @@ abstract contract BaseSlave {
         tvm.setcode(code);
         tvm.setCurrentCode(code);
         tvm.resetStorage();
-        onCodeUpgrade(data, oldVersion, params, remainingGasTo);
+        _onCodeUpgrade(data, oldVersion, params, remainingGasTo);
+        // todo check this
+        tvm.commit();
+        tvm.exit();
     }
 
     function _encodeContractData() internal virtual returns (TvmCell);
 
-    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address remainingGasTo) internal virtual;
+    // This is wrapper around `onCodeUpgrade` function because
+    // contract can be a Platform with own `onCodeUpgrade` function
+    function _onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address remainingGasTo) internal virtual;
 
 }

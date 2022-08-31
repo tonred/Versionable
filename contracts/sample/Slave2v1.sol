@@ -4,12 +4,13 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../BaseSlave.sol";
+import "../BaseSlaveNoPlatform.sol";
 import "../utils/Constants.sol";
 
 
-contract Slave2v1 is BaseSlave {
+contract Slave2v1 is BaseSlaveNoPlatform {
 
+    address public static _owner;
     uint256 public _data;
 
     constructor() public BaseSlave(2, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR)) {}

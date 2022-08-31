@@ -8,10 +8,16 @@ abstract contract BaseMaster {
     event NewVersion(uint16 sid, Version version, uint256 hash, bool initial);
     event SetActivation(Version version, bool active);
 
-    mapping(uint16 /*sid*/ => SlaveData) _slaves;  // cannot be public due to "ABIEncoderV2" exception
+    // cannot be public due to "ABIEncoderV2" exception
+    mapping(uint16 /*sid*/ => SlaveData) _slaves;
 
-    constructor(uint16[] sids, TvmCell[] codes) internal {
+
+    constructor(uint16[] sids, TvmCell[] codes, bool withTvmAccept) internal {
         require(sids.length == codes.length, ErrorCodes.DIFFERENT_LENGTH);
+        if (withTvmAccept) {
+            // credit funds is not enough for constructor is case of external message
+            tvm.accept();
+        }
         TvmCell empty;
         for (uint16 i = 0; i < sids.length; i++) {
             uint16 sid = sids[i];
@@ -120,6 +126,11 @@ abstract contract BaseMaster {
             flag: MsgFlag.REMAINING_GAS,
             bounce: false
         }(version, code, params, remainingGasTo);
+    }
+
+    function _getLatestCode(uint16 sid) internal view returns (TvmCell) {
+        require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
+        return _slaves[sid].code;
     }
 
 

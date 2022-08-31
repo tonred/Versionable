@@ -12,7 +12,7 @@ library ErrorCodes {
     uint16 constant INVALID_HASH                        = 12306;
     uint16 constant NO_NEW_VERSIONS                     = 12307;
 
-    // Slave (users)
+    // Slave (user's implementation)
     // Use this code in your custom Slaves when you denied upgrades
     // from specific versions directly to current version
     // For example, deny upgrades from v1.1 to v1.4 directly,

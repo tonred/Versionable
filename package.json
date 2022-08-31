@@ -7,7 +7,11 @@
     "setup": "npm install && git pull && npm install",
     "build": "export $(cat .env | xargs) && locklift build --config locklift.config.js",
     "test": "locklift test --test test/ --config locklift.config.js --network local --disable-build",
-    "deploy-sample": "locklift run -s scripts/deploy-sample.js --config locklift.config.js --network local --disable-build"
+    "1-deploy-account": "locklift run -s scripts/1-deploy-account.js --config locklift.config.js --network local --disable-build",
+    "2-deploy-master": "locklift run -s scripts/2-deploy-master.js --config locklift.config.js --network local --disable-build",
+    "3-deploy-slave1": "locklift run -s scripts/3-deploy-slave1.js --config locklift.config.js --network local --disable-build",
+    "4-new-version-slave1": "locklift run -s scripts/4-new-version-slave1.js --config locklift.config.js --network local --disable-build",
+    "5-upgrade-slave1": "locklift run -s scripts/5-upgrade-slave1.js --config locklift.config.js --network local --disable-build"
   },
   "author": "TONRED",
   "license": "ISC",
