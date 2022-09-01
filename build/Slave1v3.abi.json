@@ -11,6 +11,18 @@
 			]
 		},
 		{
+			"name": "acceptUpgrade",
+			"inputs": [
+				{"name":"sid","type":"uint16"},
+				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"},
+				{"name":"code","type":"cell"},
+				{"name":"params","type":"cell"},
+				{"name":"remainingGasTo","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "getSID",
 			"inputs": [
 				{"name":"answerId","type":"uint32"}
@@ -26,17 +38,6 @@
 			],
 			"outputs": [
 				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"}
-			]
-		},
-		{
-			"name": "acceptUpgrade",
-			"inputs": [
-				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"},
-				{"name":"code","type":"cell"},
-				{"name":"params","type":"cell"},
-				{"name":"remainingGasTo","type":"address"}
-			],
-			"outputs": [
 			]
 		},
 		{

@@ -9,11 +9,17 @@ import "../utils/Constants.sol";
 
 
 contract Slave2v1 is BaseSlaveNoPlatform {
+    uint16 constant IS_NOT_OWNER = 1001;
 
     address public static _owner;
     uint256 public _data;
 
     constructor() public BaseSlave(2, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR)) {}
+
+    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override {
+        require(msg.sender == _owner, IS_NOT_OWNER);
+        _acceptUpgrade(sid, version, code, params, remainingGasTo);
+    }
 
     function _encodeContractData() internal override returns (TvmCell) {
         return abi.encode(_sid, _version, _data);

@@ -109,7 +109,7 @@ abstract contract BaseMaster {
         require(active, ErrorCodes.VERSION_IS_DEACTIVATED);
         uint256 hash = _versionHash(version, code, params);
         require(hash == expectedHash, ErrorCodes.INVALID_HASH);
-        _sendUpgrade(destination, version, code, params, remainingGasTo);
+        _sendUpgrade(destination, sid, version, code, params, remainingGasTo);
     }
 
     function _upgradeToLatest(uint16 sid, address destination, address remainingGasTo) internal view {
@@ -117,15 +117,17 @@ abstract contract BaseMaster {
         SlaveData data = _slaves[sid];
         require(data.versionsCount > 1, ErrorCodes.NO_NEW_VERSIONS);
         // dont unpack `data` in order to optimize gas usage (versions[] can be huge)
-        _sendUpgrade(destination, data.latest, data.code, data.params, remainingGasTo);
+        _sendUpgrade(destination, sid, data.latest, data.code, data.params, remainingGasTo);
     }
 
-    function _sendUpgrade(address destination, Version version, TvmCell code, TvmCell params, address remainingGasTo) internal pure inline {
+    function _sendUpgrade(
+        address destination, uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo
+    ) internal pure inline {
         BaseSlave(destination).acceptUpgrade{
             value: 0,
             flag: MsgFlag.REMAINING_GAS,
             bounce: false
-        }(version, code, params, remainingGasTo);
+        }(sid, version, code, params, remainingGasTo);
     }
 
     function _getLatestCode(uint16 sid) internal view returns (TvmCell) {

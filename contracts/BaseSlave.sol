@@ -28,8 +28,11 @@ abstract contract BaseSlave {
         return {value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false} _version;
     }
 
-    function acceptUpgrade(Version version, TvmCell code, TvmCell params, address remainingGasTo) public virtual {
-        if (version.compare(_version) != 1) {
+    // Check sender in implementation
+    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public virtual;
+
+    function _acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) internal {
+        if (sid != _sid || version.compare(_version) != 1) {
             remainingGasTo.transfer({value: 0, flag: MsgFlag.REMAINING_GAS, bounce: false});
             return;
         }
@@ -41,9 +44,6 @@ abstract contract BaseSlave {
         tvm.setCurrentCode(code);
         tvm.resetStorage();
         _onCodeUpgrade(data, oldVersion, params, remainingGasTo);
-        // todo check this
-        tvm.commit();
-        tvm.exit();
     }
 
     function _encodeContractData() internal virtual returns (TvmCell);
