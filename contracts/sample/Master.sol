@@ -19,9 +19,9 @@ contract Master is BaseMaster, InternalOwner, RandomNonce {
         msg.sender.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED, bounce: false});
     }
 
-    constructor(address owner, TvmCell slave1Code, TvmCell slave2Code) public BaseMaster(
-        [uint16(1), uint16(2)], [slave1Code, slave2Code], true
-    ) {
+    constructor(address owner, TvmCell slave1Code, TvmCell slave2Code) public {
+        tvm.accept();
+        _init([uint16(1), uint16(2)], [slave1Code, slave2Code]);
         setOwnership(owner);
     }
 

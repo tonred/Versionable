@@ -12,12 +12,8 @@ abstract contract BaseMaster {
     mapping(uint16 /*sid*/ => SlaveData) _slaves;
 
 
-    constructor(uint16[] sids, TvmCell[] codes, bool withTvmAccept) internal {
+    function _init(uint16[] sids, TvmCell[] codes) internal {
         require(sids.length == codes.length, ErrorCodes.DIFFERENT_LENGTH);
-        if (withTvmAccept) {
-            // credit funds is not enough for constructor is case of external message
-            tvm.accept();
-        }
         TvmCell empty;
         for (uint16 i = 0; i < sids.length; i++) {
             uint16 sid = sids[i];

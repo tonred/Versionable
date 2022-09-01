@@ -14,14 +14,20 @@ contract Slave1v1 is BaseSlaveNoPlatform {
     address public static _owner;
     string public _data;
 
-    constructor() public BaseSlave(1, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR)) {}
+    modifier onlyOwner() {
+        require(msg.sender == _owner, IS_NOT_OWNER);
+        _;
+    }
+
+    constructor() public onlyOwner {
+        _init(1, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR));
+    }
 
     function _encodeContractData() internal override returns (TvmCell) {
         return abi.encode(_sid, _version, _data);
     }
 
-    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override {
-        require(msg.sender == _owner, IS_NOT_OWNER);
+    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override onlyOwner {
         _acceptUpgrade(sid, version, code, params, remainingGasTo);
     }
 
