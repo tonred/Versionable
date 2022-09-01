@@ -80,12 +80,12 @@ abstract contract BaseMaster {
         }
     }
 
-    function _setVersionActivation(uint16 sid, Version version, bool active) internal view {
+    function _setVersionActivation(uint16 sid, Version version, bool active) internal {
         require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
         SlaveData data = _slaves[sid];
         require(data.versions.exists(version), ErrorCodes.INVALID_VERSION);
         require(VersionLibrary.compare(data.latest, version) == 1, ErrorCodes.CANNOT_CHANGE_LATEST_ACTIVATION);
-        data.versions[version].active = active;
+        _slaves[sid].versions[version].active = active;
         emit SetActivation(version, active);
     }
 
