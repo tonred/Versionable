@@ -90,13 +90,29 @@ abstract contract BaseMaster {
     }
 
 
+    function _upgradeToLatest(
+        uint16 sid,
+        address destination,
+        address remainingGasTo,
+        uint128 value,
+        uint8 flag
+    ) internal view {
+        require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
+        SlaveData data = _slaves[sid];
+        require(data.versionsCount > 1, ErrorCodes.NO_NEW_VERSIONS);
+        // dont unpack `data` in order to optimize gas usage (versions[] can be huge)
+        _sendUpgrade(destination, sid, data.latest, data.code, data.params, remainingGasTo, value, flag);
+    }
+
     function _upgradeToSpecific(
         uint16 sid,
         address destination,
         Version version,
         TvmCell code,
         TvmCell params,
-        address remainingGasTo
+        address remainingGasTo,
+        uint128 value,
+        uint8 flag
     ) internal view {
         require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
         SlaveData data = _slaves[sid];
@@ -105,23 +121,22 @@ abstract contract BaseMaster {
         require(active, ErrorCodes.VERSION_IS_DEACTIVATED);
         uint256 hash = _versionHash(version, code, params);
         require(hash == expectedHash, ErrorCodes.INVALID_HASH);
-        _sendUpgrade(destination, sid, version, code, params, remainingGasTo);
-    }
-
-    function _upgradeToLatest(uint16 sid, address destination, address remainingGasTo) internal view {
-        require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
-        SlaveData data = _slaves[sid];
-        require(data.versionsCount > 1, ErrorCodes.NO_NEW_VERSIONS);
-        // dont unpack `data` in order to optimize gas usage (versions[] can be huge)
-        _sendUpgrade(destination, sid, data.latest, data.code, data.params, remainingGasTo);
+        _sendUpgrade(destination, sid, version, code, params, remainingGasTo, value, flag);
     }
 
     function _sendUpgrade(
-        address destination, uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo
+        address destination,
+        uint16 sid,
+        Version version,
+        TvmCell code,
+        TvmCell params,
+        address remainingGasTo,
+        uint128 value,
+        uint8 flag
     ) internal pure inline {
         BaseSlave(destination).acceptUpgrade{
-            value: 0,
-            flag: MsgFlag.REMAINING_GAS,
+            value: value,
+            flag: flag,
             bounce: false
         }(sid, version, code, params, remainingGasTo);
     }
