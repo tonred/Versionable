@@ -12,7 +12,7 @@ abstract contract BaseMaster {
     mapping(uint16 /*sid*/ => SlaveData) _slaves;
 
 
-    function _init(uint16[] sids, TvmCell[] codes) internal {
+    function _initVersions(uint16[] sids, TvmCell[] codes) internal {
         require(sids.length == codes.length, ErrorCodes.DIFFERENT_LENGTH);
         TvmCell empty;
         for (uint16 i = 0; i < sids.length; i++) {

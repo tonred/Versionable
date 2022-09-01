@@ -19,7 +19,7 @@ contract Slave1v3 is BaseSlaveNoPlatform {
     }
 
     constructor() public onlyOwner {
-        _init(1, Version(1, 3));
+        _initVersion(1, Version(1, 3));
     }
 
     function _encodeContractData() internal override returns (TvmCell) {

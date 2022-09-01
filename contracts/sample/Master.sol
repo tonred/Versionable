@@ -21,7 +21,7 @@ contract Master is BaseMaster, InternalOwner, RandomNonce {
 
     constructor(address owner, TvmCell slave1Code, TvmCell slave2Code) public {
         tvm.accept();
-        _init([uint16(1), uint16(2)], [slave1Code, slave2Code]);
+        _initVersions([uint16(1), uint16(2)], [slave1Code, slave2Code]);
         setOwnership(owner);
     }
 

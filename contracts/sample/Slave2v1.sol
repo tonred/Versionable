@@ -20,7 +20,7 @@ contract Slave2v1 is BaseSlaveNoPlatform {
     }
 
     constructor() public onlyOwner {
-        _init(2, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR));
+        _initVersion(2, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR));
     }
 
     function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override onlyOwner {

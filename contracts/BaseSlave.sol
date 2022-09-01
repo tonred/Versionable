@@ -15,7 +15,7 @@ abstract contract BaseSlave {
     uint16 public _sid;
     Version public _version;
 
-    function _init(uint16 sid, Version version) internal {
+    function _initVersion(uint16 sid, Version version) internal {
         _sid = sid;
         _version = version;
     }
