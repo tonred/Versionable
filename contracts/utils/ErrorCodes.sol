@@ -10,7 +10,6 @@ library ErrorCodes {
     uint16 constant CANNOT_CHANGE_LATEST_ACTIVATION     = 12304;
     uint16 constant VERSION_IS_DEACTIVATED              = 12305;
     uint16 constant INVALID_HASH                        = 12306;
-    uint16 constant NO_NEW_VERSIONS                     = 12307;
 
     // Slave (user's implementation)
     // Use this code in your custom Slaves when you denied upgrades

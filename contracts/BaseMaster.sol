@@ -99,7 +99,10 @@ abstract contract BaseMaster {
     ) internal view {
         require(_slaves.exists(sid), ErrorCodes.INVALID_SID);
         SlaveData data = _slaves[sid];
-        require(data.versionsCount > 1, ErrorCodes.NO_NEW_VERSIONS);
+        if (data.versionsCount == 1) {
+            // no new version
+            return;
+        }
         // dont unpack `data` in order to optimize gas usage (versions[] can be huge)
         _sendUpgrade(destination, sid, data.latest, data.code, data.params, remainingGasTo, value, flag);
     }
