@@ -9,17 +9,18 @@ import "../utils/Constants.sol";
 
 
 contract Slave1v1 is BaseSlaveNoPlatform {
-    uint16 constant IS_NOT_OWNER = 1001;
+    uint16 constant IS_NOT_MASTER = 1001;
 
+    address public static _master;
     address public static _owner;
     string public _data;
 
-    modifier onlyOwner() {
-        require(msg.sender == _owner, IS_NOT_OWNER);
+    modifier onlyMaster() {
+        require(msg.sender == _master, IS_NOT_MASTER);
         _;
     }
 
-    constructor() public onlyOwner {
+    constructor() public onlyMaster {
         _initVersion(1, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR));
     }
 
@@ -27,7 +28,7 @@ contract Slave1v1 is BaseSlaveNoPlatform {
         return abi.encode(_sid, _version, _data);
     }
 
-    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override onlyOwner {
+    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override onlyMaster {
         _acceptUpgrade(sid, version, code, params, remainingGasTo);
     }
 

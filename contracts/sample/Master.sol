@@ -53,6 +53,7 @@ contract Master is BaseMaster, InternalOwner, RandomNonce {
         return tvm.buildStateInit({
             contr: Slave1v1,
             varInit: {
+                _master: address(this),
                 _owner: owner
             },
             code: _getLatestCode(1)

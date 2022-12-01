@@ -17,17 +17,19 @@ const main = async () => {
     const Slave1v2 = await locklift.factory.getContract('Slave1v2');
     const master = migration.load(await locklift.factory.getAccount('Master'), 'Master');
 
+    let slaveAddress = '0:ba8964312707666f49411b09c2289ffd48f4de77f054298cccc800404197e351'
+    // todo no way to check if slave1 has new data via locklift 1.4.5...
+    logger.log('Slave address:', slaveAddress, '(replace with your address in code!)');
     await owner.runTarget({
         contract: master,
         method: 'upgradeSlave1',
         params: {
-            destination: '0:897cf9b13c55cc60441abf8d7e7bda959cece51c51b25a5f998cfd586994da65',
+            destination: slaveAddress,
         },
         value: locklift.utils.convertCrystal(0.5, 'nano')
     })
 
-    // todo no way to check if slave1 has new data via locklift 1.4.5...
-    master.address = '0:897cf9b13c55cc60441abf8d7e7bda959cece51c51b25a5f998cfd586994da65';
+    master.address = slaveAddress;
     master.abi = Slave1v2.abi;
     master.code = Slave1v2.code;
     const data = await master.call({

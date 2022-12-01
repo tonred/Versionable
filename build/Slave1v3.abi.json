@@ -57,6 +57,14 @@
 			]
 		},
 		{
+			"name": "_master",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"_master","type":"address"}
+			]
+		},
+		{
 			"name": "_owner",
 			"inputs": [
 			],
@@ -74,7 +82,8 @@
 		}
 	],
 	"data": [
-		{"key":1,"name":"_owner","type":"address"}
+		{"key":1,"name":"_master","type":"address"},
+		{"key":2,"name":"_owner","type":"address"}
 	],
 	"events": [
 		{
@@ -93,6 +102,7 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"name":"_sid","type":"uint16"},
 		{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"_version","type":"tuple"},
+		{"name":"_master","type":"address"},
 		{"name":"_owner","type":"address"},
 		{"name":"_data","type":"string"}
 	]
