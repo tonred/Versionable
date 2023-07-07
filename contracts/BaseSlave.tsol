@@ -1,10 +1,10 @@
 pragma ton-solidity >= 0.61.2;
 
-import "./utils/Constants.sol";
-import "./utils/ErrorCodes.sol";
-import "./utils/VersionLibrary.sol";
+import "./utils/Constants.tsol";
+import "./utils/ErrorCodes.tsol";
+import "./utils/VersionLibrary.tsol";
 
-import "@broxus/contracts/contracts/libraries/MsgFlag.sol";
+import "@broxus/contracts/contracts/libraries/MsgFlag.tsol";
 
 
 abstract contract BaseSlave {

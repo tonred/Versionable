@@ -1,6 +1,6 @@
 pragma ton-solidity >= 0.61.2;
 
-import "./Structs.sol";
+import "./Structs.tsol";
 
 
 library VersionLibrary {

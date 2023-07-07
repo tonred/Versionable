@@ -4,7 +4,7 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../BaseSlaveNoPlatform.sol";
+import "../BaseSlaveNoPlatform.tsol";
 
 
 contract Slave1v3 is BaseSlaveNoPlatform {

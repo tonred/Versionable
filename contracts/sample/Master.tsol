@@ -4,11 +4,11 @@ pragma AbiHeader time;
 pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
-import "../BaseMaster.sol";
-import "./Slave1v1.sol";
+import "../BaseMaster.tsol";
+import "./Slave1v1.tsol";
 
-import "@broxus/contracts/contracts/access/InternalOwner.sol";
-import "@broxus/contracts/contracts/utils/RandomNonce.sol";
+import "@broxus/contracts/contracts/access/InternalOwner.tsol";
+import "@broxus/contracts/contracts/utils/RandomNonce.tsol";
 
 
 contract Master is BaseMaster, InternalOwner, RandomNonce {

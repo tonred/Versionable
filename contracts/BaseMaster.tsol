@@ -1,7 +1,7 @@
 pragma ton-solidity >= 0.61.2;
 
-import "./utils/Constants.sol";
-import "./BaseSlave.sol";
+import "./utils/Constants.tsol";
+import "./BaseSlave.tsol";
 
 
 abstract contract BaseMaster {
