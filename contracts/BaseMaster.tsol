@@ -111,7 +111,7 @@ abstract contract BaseMaster {
     function _upgradeToLatest(
         address destination,
         uint16 sid,
-        address remainingGasTo,
+        address caller,
         uint128 value,
         uint8 flag
     ) internal view checkSID(sid) {
@@ -121,7 +121,7 @@ abstract contract BaseMaster {
             return;
         }
         // dont unpack `data` in order to optimize gas usage (versions[] can be huge)
-        _sendUpgrade(destination, sid, data.latest, data.code, data.params, remainingGasTo, value, flag);
+        _sendUpgrade(destination, sid, data.latest, data.code, data.params, caller, value, flag);
     }
 
     function _upgradeToSpecific(
@@ -130,7 +130,7 @@ abstract contract BaseMaster {
         Version version,
         TvmCell code,
         TvmCell params,
-        address remainingGasTo,
+        address caller,
         uint128 value,
         uint8 flag
     ) internal view checkSIDVersion(sid, version) {
@@ -139,7 +139,7 @@ abstract contract BaseMaster {
         require(active, ErrorCodes.VERSION_IS_DEACTIVATED);
         uint256 hash = _versionHash(version, code, params);
         require(hash == expectedHash, ErrorCodes.INVALID_HASH);
-        _sendUpgrade(destination, sid, version, code, params, remainingGasTo, value, flag);
+        _sendUpgrade(destination, sid, version, code, params, caller, value, flag);
     }
 
     function _sendUpgrade(
@@ -148,7 +148,7 @@ abstract contract BaseMaster {
         Version version,
         TvmCell code,
         TvmCell params,
-        address remainingGasTo,
+        address caller,
         uint128 value,
         uint8 flag
     ) internal pure inline {
@@ -156,7 +156,7 @@ abstract contract BaseMaster {
             value: value,
             flag: flag,
             bounce: false
-        }(sid, version, code, params, remainingGasTo);
+        }(sid, version, code, params, caller);
     }
 
     function _getLatestCode(uint16 sid) internal view checkSID(sid) returns (TvmCell) {

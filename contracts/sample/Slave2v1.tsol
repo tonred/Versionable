@@ -24,8 +24,8 @@ contract Slave2v1 is BaseSlaveNoPlatform {
         _initVersion(2, Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR));
     }
 
-    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override onlyMaster {
-        _acceptUpgrade(sid, version, code, params, remainingGasTo);
+    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address caller) public override onlyMaster {
+        _acceptUpgrade(sid, version, code, params, caller);
     }
 
     function _encodeContractData() internal override returns (TvmCell) {
@@ -33,7 +33,7 @@ contract Slave2v1 is BaseSlaveNoPlatform {
     }
 
     // There is no possibility to upgrade to 0's version
-    function onCodeUpgrade(TvmCell /*data*/, Version /*oldVersion*/, TvmCell /*params*/, address /*remainingGasTo*/) internal override {
+    function onCodeUpgrade(TvmCell /*data*/, Version /*oldVersion*/, TvmCell /*params*/, address /*caller*/) internal override {
         revert(ErrorCodes.INVALID_OLD_VERSION);
     }
 

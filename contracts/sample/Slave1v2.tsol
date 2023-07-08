@@ -27,11 +27,11 @@ contract Slave1v2 is BaseSlaveNoPlatform {
         return abi.encode(_sid, _version, _data);
     }
 
-    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address remainingGasTo) public override onlyMaster {
-        _acceptUpgrade(sid, version, code, params, remainingGasTo);
+    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address caller) public override onlyMaster {
+        _acceptUpgrade(sid, version, code, params, caller);
     }
 
-    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address remainingGasTo) internal override {
+    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller) internal override {
         (_sid, _version, _data) = abi.decode(data, (uint16, Version, string));
         if (oldVersion.equals(Version(1, 1))) {
             string append = abi.decode(params, string);
@@ -41,7 +41,7 @@ contract Slave1v2 is BaseSlaveNoPlatform {
             revert(ErrorCodes.INVALID_OLD_VERSION);
         }
         tvm.rawReserve(4, 0);
-        remainingGasTo.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED, bounce: false});
+        caller.transfer({value: 0, flag: MsgFlag.ALL_NOT_RESERVED, bounce: false});
     }
 
 }
