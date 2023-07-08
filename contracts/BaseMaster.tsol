@@ -26,23 +26,27 @@ abstract contract BaseMaster {
 
     function _initVersions(uint16[] sids, TvmCell[] codes) internal {
         require(sids.length == codes.length, ErrorCodes.DIFFERENT_LENGTH);
-        TvmCell empty;
         for (uint16 i = 0; i < sids.length; i++) {
             uint16 sid = sids[i];
             TvmCell code = codes[i];
-            Version version = Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR);
-            uint256 hash = _versionHash(version, code, empty);
-            mapping(Version => VersionData) versions;
-            versions[version] = VersionData({hash: hash, active: false});  // disallow upgrading to initial version
-            _slaves[sid] = SlaveData({
-                code: code,
-                params: empty,
-                latest: version,
-                versionsCount: 1,
-                versions: versions
-            });
-            emit NewVersion(sid, version, hash, true);
+            _initVersion(sid, code);
         }
+    }
+
+    function _initVersion(uint16 sid, TvmCell code) internal {
+        TvmCell empty;
+        Version version = Version(Constants.INITIAL_MINOR, Constants.INITIAL_MAJOR);
+        uint256 hash = _versionHash(version, code, empty);
+        mapping(Version => VersionData) versions;
+        versions[version] = VersionData({hash: hash, active: false});  // disallow upgrading to initial version
+        _slaves[sid] = SlaveData({
+            code: code,
+            params: empty,
+            latest: version,
+            versionsCount: 1,
+            versions: versions
+        });
+        emit NewVersion(sid, version, hash, true);
     }
 
     // cannot create getter for `_slave` because mapping key in getter cannot be `Version` type
