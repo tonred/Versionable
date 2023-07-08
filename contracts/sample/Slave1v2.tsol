@@ -27,11 +27,13 @@ contract Slave1v2 is BaseSlaveNoPlatform {
         return abi.encode(_sid, _version, _data);
     }
 
-    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address caller) public override onlyMaster {
-        _acceptUpgrade(sid, version, code, params, caller);
+    function acceptUpgrade(
+        uint16 sid, Version version, TvmCell code, TvmCell params, address caller, TvmCell meta
+    ) public override onlyMaster {
+        _acceptUpgrade(sid, version, code, params, caller, meta);
     }
 
-    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller) internal override {
+    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller, TvmCell /*meta*/) internal override {
         (_sid, _version, _data) = abi.decode(data, (uint16, Version, string));
         if (oldVersion.equals(Version(1, 1))) {
             string append = abi.decode(params, string);

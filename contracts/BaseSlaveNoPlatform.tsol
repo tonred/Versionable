@@ -9,10 +9,10 @@ import "./BaseSlave.tsol";
 
 abstract contract BaseSlaveNoPlatform is BaseSlave {
 
-    function _onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller) internal override {
-        onCodeUpgrade(data, oldVersion, params, caller);
+    function _onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller, TvmCell meta) internal override {
+        onCodeUpgrade(data, oldVersion, params, caller, meta);
     }
 
-    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller) internal virtual;
+    function onCodeUpgrade(TvmCell data, Version oldVersion, TvmCell params, address caller, TvmCell meta) internal virtual;
 
 }

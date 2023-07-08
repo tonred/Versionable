@@ -17,7 +17,8 @@
 				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"},
 				{"name":"code","type":"cell"},
 				{"name":"params","type":"cell"},
-				{"name":"remainingGasTo","type":"address"}
+				{"name":"caller","type":"address"},
+				{"name":"meta","type":"cell"}
 			],
 			"outputs": [
 			]

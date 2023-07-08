@@ -28,12 +28,16 @@ contract Slave1v1 is BaseSlaveNoPlatform {
         return abi.encode(_sid, _version, _data);
     }
 
-    function acceptUpgrade(uint16 sid, Version version, TvmCell code, TvmCell params, address caller) public override onlyMaster {
-        _acceptUpgrade(sid, version, code, params, caller);
+    function acceptUpgrade(
+        uint16 sid, Version version, TvmCell code, TvmCell params, address caller, TvmCell meta
+    ) public override onlyMaster {
+        _acceptUpgrade(sid, version, code, params, caller, meta);
     }
 
     // There is no possibility to upgrade to 0's version
-    function onCodeUpgrade(TvmCell /*data*/, Version /*oldVersion*/, TvmCell /*params*/, address /*caller*/) internal override {
+    function onCodeUpgrade(
+        TvmCell /*data*/, Version /*oldVersion*/, TvmCell /*params*/, address /*caller*/, TvmCell /*meta*/
+    ) internal override {
         revert(ErrorCodes.INVALID_OLD_VERSION);
     }
 
