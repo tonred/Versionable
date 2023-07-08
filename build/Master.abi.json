@@ -103,7 +103,7 @@
 				{"components":[{"name":"major","type":"uint32"},{"name":"minor","type":"uint32"}],"name":"version","type":"tuple"}
 			],
 			"outputs": [
-				{"components":[{"name":"hash","type":"uint256"},{"name":"active","type":"bool"}],"name":"data","type":"tuple"}
+				{"components":[{"name":"hash","type":"uint256"},{"name":"active","type":"bool"}],"name":"versionData","type":"tuple"}
 			]
 		},
 		{

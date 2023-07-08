@@ -45,7 +45,7 @@ contract Master is BaseMaster, InternalOwner, RandomNonce {
     }
 
     function upgradeSlave1(address destination) public view {
-        _upgradeToLatest(1, destination, msg.sender, 0, MsgFlag.REMAINING_GAS);
+        _upgradeToLatest(destination, 1, msg.sender, 0, MsgFlag.REMAINING_GAS);
     }
 
 

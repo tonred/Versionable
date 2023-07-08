@@ -92,7 +92,7 @@ describe("Test Versionable contracts", async function () {
     const data = await master.methods.getSlaveData({
       answerId: 0,
       sid: 1,
-    }).call();
+    }).call({responsible: true});
     expect(data).to.deep.equal({
       code: code,
       params: packed.boc,
